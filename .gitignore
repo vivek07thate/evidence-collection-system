@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Database
+*.db
+
+# Logs
+*.log
+
+# MinIO / uploads (if local storage exists)
+uploads/
+
+# Chroma
+chroma/

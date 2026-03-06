@@ -1,0 +1,6 @@
+Case ID: 2026-002
+Investigation: Fraud Detection
+Suspect: vivek Thate
+Summary: Suspicious transactions detected  and vivek thate is fraud in the accounts department. 
+Action Taken: Account flagged and audit initiated.
+Evidence Notes: Screenshots of transactions attached, emails reviewed .

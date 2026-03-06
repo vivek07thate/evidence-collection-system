@@ -1,0 +1,33 @@
+Case ID: 2026-002 Investigation: Fraud Detection Suspect: Vivek 
+Summary: Suspicious transactions detected and Vivek  is suspected
+of fraud in the accounts department. Action Taken: Account flagged and
+audit initiated. Evidence Notes: Screenshots of transactions attached,
+emails reviewed.
+
+Case ID: 2026-003
+Investigation: Money Laundering
+Suspect: Rahul Mehta
+Summary: Large volume of unexplained international transfers detected in offshore accounts.
+Action Taken: Transactions frozen and compliance team notified.
+Evidence Notes: Bank statements reviewed, transaction logs exported.
+
+Case ID: 2026-004
+Investigation: Data Breach
+Suspect: Priya Sharma
+Summary: Unauthorized access to internal financial database detected using employee credentials.
+Action Taken: System access revoked and cybersecurity audit initiated.
+Evidence Notes: Server logs captured, login IP addresses traced.
+
+Case ID: 2026-006
+Investigation: Procurement Fraud
+Suspect: Neha Deshmukh
+Summary: Inflated vendor invoices submitted for government procurement project.
+Action Taken: Vendor payments paused and internal audit launched.
+Evidence Notes: Invoice copies collected, vendor contracts reviewed.
+
+Case ID: 2026-007
+Investigation: Bribery Allegation
+Suspect: Amit Kulkarni
+Summary: Payments received from external contractor in exchange for project approvals.
+Action Taken: HR and legal department informed, disciplinary proceedings initiated.
+Evidence Notes: Email conversations archived, payment receipts examined.

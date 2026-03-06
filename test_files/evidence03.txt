@@ -1,0 +1,6 @@
+Case ID: 2026-003
+Investigation: Money Laundering
+Suspect: Rahul Mehta
+Summary: Large volume of unexplained international transfers detected in offshore accounts.
+Action Taken: Transactions frozen and compliance team notified.
+Evidence Notes: Bank statements reviewed, transaction logs exported.

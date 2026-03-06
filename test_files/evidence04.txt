@@ -1,0 +1,6 @@
+Case ID: 2026-004
+Investigation: Data Breach
+Suspect: Priya Sharma
+Summary: Unauthorized access to internal financial database detected using employee credentials.
+Action Taken: System access revoked and cybersecurity audit initiated.
+Evidence Notes: Server logs captured, login IP addresses traced.

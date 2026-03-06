@@ -1,0 +1,6 @@
+Case ID: 2026-001
+Investigation: Fraud Detection
+Suspect: John Doe
+Summary: Suspicious transactions detected in the accounts department. 
+Action Taken: Account flagged and audit initiated.
+Evidence Notes: Screenshots of transactions attached, emails reviewed.
