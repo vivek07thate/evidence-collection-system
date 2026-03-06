@@ -27,13 +27,9 @@ Users can ask questions like:
 📁 Multi-format Evidence Support
 
 PDF
-
 Images
-
 Text documents
-
 Video metadata
-
 🏗 System Architecture
                 ┌──────────────────────┐
                 │   Investigator UI    │
