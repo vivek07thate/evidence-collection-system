@@ -1,224 +1,257 @@
-# evidence-collection-system
+# 🧠 Evidence Collection & Intelligence System
 
-An AI-powered evidence management platform that enables investigators to securely store, retrieve, and analyze digital evidence using semantic search and Retrieval-Augmented Generation (RAG).
+An **AI-powered Evidence Collection and Intelligence Platform** designed to store, analyze, and retrieve investigative evidence using **semantic search and Retrieval-Augmented Generation (RAG)**.
 
-Instead of relying on traditional keyword search, the system understands the contextual meaning of documents using embeddings and large language models.
+Traditional systems rely on keyword search, which often fails to capture the **true context of evidence documents**. This system uses **vector embeddings and LLM-based reasoning** to enable investigators to ask natural language questions and retrieve the most relevant evidence.
 
-🚀 Features
+---
 
-🔎 Semantic Evidence Search
+# 🚀 Key Features
+
+🔍 **Semantic Evidence Search**
 Search evidence using natural language queries instead of exact keywords.
 
-🧠 RAG-Based Intelligence System
-Combines document retrieval with an LLM to generate contextual answers.
+🧠 **Retrieval-Augmented Generation (RAG)**
+Combines document retrieval with a Large Language Model to generate contextual answers.
 
-📂 Secure Evidence Storage
-Files are stored in object storage with metadata management.
+📂 **Secure Evidence Storage**
+Evidence files are stored using **object storage architecture** ensuring scalability and durability.
 
-📊 Vector Embeddings
-Documents are converted into embeddings to enable semantic similarity search.
+📊 **Vector Embeddings**
+Documents are transformed into high-dimensional embeddings for similarity search.
 
-💬 Investigator Chat Interface
-Users can ask questions like:
+💬 **Investigator Chat Interface**
+Investigators can interact with the system using conversational queries.
 
-"What evidence mentions financial fraud?"
-"Show documents related to suspect X."
+📁 **Multi-format Evidence Support**
 
-📁 Multi-format Evidence Support
+* PDF documents
+* Text files
+* Images
+* Video metadata
 
-PDF
-Images
-Text documents
-Video metadata
-🏗 System Architecture
-                ┌──────────────────────┐
-                │   Investigator UI    │
-                │  (Chat Interface)    │
-                └──────────┬───────────┘
-                           │
-                           ▼
-                 ┌──────────────────┐
-                 │   FastAPI API    │
-                 │ Backend Service  │
-                 └──────────┬───────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        ▼                   ▼                   ▼
- ┌─────────────┐   ┌────────────────┐   ┌────────────────┐
- │ Object      │   │ Embedding      │   │ Vector Search  │
- │ Storage     │   │ Model          │   │ Engine         │
- │ (Evidence)  │   │ (Transformers) │   │ (Chroma / etc) │
- └─────────────┘   └────────────────┘   └────────────────┘
-                            │
-                            ▼
-                   ┌─────────────────┐
-                   │ Large Language  │
-                   │ Model (LLM)     │
-                   └─────────────────┘
-                            │
-                            ▼
-                    Generated Intelligence
-🧠 RAG Pipeline
+---
 
-The system uses Retrieval Augmented Generation (RAG) to answer user queries.
+# 🏗 System Architecture
 
-Step 1 — Evidence Upload
+```
+                   ┌─────────────────────────┐
+                   │  Investigator Interface │
+                   │  (Chat / Search UI)     │
+                   └─────────────┬───────────┘
+                                 │
+                                 ▼
+                        ┌─────────────────┐
+                        │   FastAPI API   │
+                        │  Backend Server │
+                        └────────┬────────┘
+                                 │
+         ┌───────────────────────┼────────────────────────┐
+         ▼                       ▼                        ▼
+ ┌───────────────┐     ┌──────────────────┐      ┌─────────────────┐
+ │ Object Storage│     │ Embedding Model  │      │ Vector Database │
+ │ Evidence Files│     │ SentenceTransformer │   │ Semantic Search │
+ └───────────────┘     └──────────────────┘      └─────────────────┘
+                                 │
+                                 ▼
+                         ┌──────────────┐
+                         │  LLM Engine  │
+                         │  (RAG Model) │
+                         └──────────────┘
+                                 │
+                                 ▼
+                        AI Generated Insights
+```
 
-Evidence documents are uploaded and stored in object storage.
+---
 
-Step 2 — Text Extraction
+# 🧠 RAG Pipeline
 
-Text is extracted from files such as PDFs or images.
+The system follows a **Retrieval Augmented Generation workflow**:
 
-Step 3 — Embedding Generation
+### 1️⃣ Evidence Ingestion
 
-The text is converted into vector embeddings using a transformer model.
+Evidence files are uploaded and stored in **object storage**.
 
-Step 4 — Vector Storage
+### 2️⃣ Text Extraction
 
-Embeddings are stored in a vector database.
+Content is extracted from documents such as PDFs or text files.
 
-Step 5 — Query Processing
+### 3️⃣ Embedding Generation
 
-When the investigator asks a question:
+The extracted text is converted into **vector embeddings** using transformer models.
 
-1️⃣ Query is converted into embedding
-2️⃣ Similar documents are retrieved
-3️⃣ Relevant context is sent to the LLM
-4️⃣ LLM generates the final answer
+### 4️⃣ Vector Storage
 
-🛠 Tech Stack
-Backend
+Embeddings are stored inside a **vector database** to enable similarity search.
 
-Python
+### 5️⃣ Query Processing
 
-FastAPI
+When an investigator asks a question:
 
-AI / ML
+1. Query is converted into an embedding
+2. Similar evidence documents are retrieved
+3. Relevant context is sent to the LLM
+4. LLM generates the final answer
 
-Sentence Transformers
+---
 
-RAG Architecture
+# 🛠 Tech Stack
 
-Cosine Similarity
+### Backend
 
-Data Storage
+* Python
+* FastAPI
 
-Object Storage (Evidence files)
+### AI / Machine Learning
 
-Vector Database (Embeddings)
+* Sentence Transformers
+* Retrieval-Augmented Generation (RAG)
+* Cosine Similarity Search
 
-Frontend
+### Storage
 
-HTML
+* Object Storage (Evidence files)
+* Vector Database (Embeddings)
 
-Bootstrap
+### Frontend
 
-JavaScript
+* HTML
+* Bootstrap
+* JavaScript
 
-Deployment
+### DevOps
 
-Docker / Cloud Platform
+* Git & GitHub
+* Docker (optional)
+* Cloud deployment ready
 
-GitHub
+---
 
-📂 Project Structure
+# 📂 Project Structure
+
+```
 evidence-collection-system
 │
-├── app/
-│   ├── main.py
-│   ├── embedding.py
-│   ├── retrieval.py
-│   └── rag_pipeline.py
+├── main.py
+├── embedding_pipeline.py
+├── rag_engine.py
+├── retrieval_system.py
 │
 ├── static/
 │   ├── index.html
-│   └── styles.css
+│   ├── css
+│   └── js
 │
 ├── uploads/
 ├── chroma/
+│
 ├── requirements.txt
 └── README.md
-⚙️ Installation
+```
 
-Clone the repository:
+---
 
+# ⚙️ Installation & Setup
+
+### Clone Repository
+
+```
 git clone https://github.com/vivek07thate/evidence-collection-system.git
+```
 
-Navigate to the project:
+### Navigate to Project
 
+```
 cd evidence-collection-system
+```
 
-Create virtual environment:
+### Create Virtual Environment
 
+```
 python -m venv venv
+```
 
-Activate environment:
+### Activate Environment
 
+Windows:
+
+```
 venv\Scripts\activate
+```
 
-Install dependencies:
+### Install Dependencies
 
+```
 pip install -r requirements.txt
+```
 
-Run the server:
+### Run Application
 
+```
 uvicorn main:app --reload
-🌐 API Example
+```
 
-Example query request:
+Application will start at:
 
-POST /query
+```
+http://127.0.0.1:8000
+```
 
-Request body:
+---
 
-{
- "question": "What evidence mentions cyber fraud?"
-}
+# 💡 Example Query
 
-Response:
+Investigators can ask questions like:
 
-{
- "answer": "The uploaded evidence indicates financial fraud activity in document X."
-}
-🔒 Security Considerations
+```
+"What evidence mentions financial fraud?"
+"Show documents related to suspect X."
+"Find reports connected to cybercrime activities."
+```
 
-Evidence stored in secure object storage
+The system retrieves the **most relevant evidence and generates contextual insights**.
 
-Metadata separated from files
+---
 
-Access control for investigators
+# 🔒 Security Considerations
 
-No direct access to raw storage
+* Evidence stored in **secure object storage**
+* Metadata managed separately
+* Scalable distributed storage architecture
+* Controlled investigator access
 
-🎯 Use Cases
+---
 
-Law enforcement investigations
+# 🎯 Use Cases
 
-Digital forensics analysis
+* Law enforcement investigations
+* Digital forensic analysis
+* Intelligence agencies
+* Legal case evidence management
+* Cybercrime investigation
 
-Intelligence agencies
+---
 
-Legal evidence management
+# 📈 Future Enhancements
 
-📌 Future Improvements
+* Multi-modal embeddings (image + text + video)
+* Real-time evidence indexing
+* Advanced access control (RBAC)
+* Automated case intelligence summaries
 
-Multi-modal embeddings (image + text)
+---
 
-Video evidence analysis
+# 👨‍💻 Author
 
-Real-time evidence monitoring
-
-Role-based access control
-
-👨‍💻 Author
-
-Vivekanand Thate
+**Vivekanand Thate**
 
 AI / Backend Developer
-Interested in AI systems, RAG architectures, and intelligent search systems
+Specializing in **AI Systems, Semantic Search, and RAG Architectures**
 
 GitHub
 https://github.com/vivek07thate
 
-⭐ If you found this project useful, consider giving it a star!
+---
+
+⭐ If you found this project useful, consider starring the repository!
