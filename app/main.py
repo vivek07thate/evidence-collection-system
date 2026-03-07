@@ -2,30 +2,38 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
-from postgresql_db import engine, SessionLocal
-import models
-from models import Evidence
+from app.db.database import engine, SessionLocal
+import app.db.models as models
+from app.db.models import Evidence
 
-from embeddings_model import generate_embedding, embedding_dimension
-from vector_store import (
+from app.services.embedding_service import generate_embedding, embedding_dimension
+from app.services.vector_service import (
     add_document,
     similarity_search,
     delete_document,
     get_vector_dimension,
     delete_all_embeddings
 )
-from object_storage import minio_client, bucket_name
-from rag_llm import ask_llm
+from app.services.storage_service import minio_client, bucket_name
+from app.services.llm_service import ask_llm
+from app.services.file_processor import process_file
 
 from datetime import datetime
 from io import BytesIO
 import uuid
+import os
 
-app = FastAPI()
+app = FastAPI(title="Evidence Collection System")
 
+# Create tables if not exists
 models.Base.metadata.create_all(bind=engine)
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Get absolute path for static files
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+static_dir = os.path.join(BASE_DIR, "static")
+
+# Mount static folder
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 
 @app.get("/")
@@ -35,17 +43,15 @@ def root():
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard():
-    with open("static/index.html", encoding="utf-8") as f:
+    index_path = os.path.join(static_dir, "index.html")
+    with open(index_path, encoding="utf-8") as f:
         return HTMLResponse(content=f.read(), media_type="text/html; charset=utf-8")
-
 
 
 @app.post("/upload-evidence")
 def upload_evidence(file: UploadFile = File(...)):
 
-    file_id = str(uuid.uuid4())
     file_name = file.filename
-
     file_bytes = file.file.read()
 
     if not file_bytes:
@@ -53,14 +59,29 @@ def upload_evidence(file: UploadFile = File(...)):
     
     db = SessionLocal()
 
-    # 🔥 Check duplicate before processing
+    # 🔥 Check duplicate by file name only
     existing = db.query(Evidence).filter(
-        Evidence.file_name == file.filename
+        Evidence.file_name == file_name
     ).first()
 
     if existing:
         db.close()
         return {"message": "File already uploaded ❌"}
+
+    # Extract text using file_processor
+    result = process_file(file_bytes, file_name, file.content_type)
+    text = str(result["text"]).strip()  # Ensure it's a string
+
+    if not text or "Error extracting" in text or "Warning: No text detected" in text:
+        db.close()
+        return {"error": "Cannot generate embeddings for empty or invalid text."}
+
+    try:
+        # Generate embedding
+        embedding = generate_embedding(text)
+    except Exception as e:
+        db.close()
+        return {"error": f"Failed to generate embedding: {str(e)}"}
 
     file_id = str(uuid.uuid4())
 
@@ -73,15 +94,6 @@ def upload_evidence(file: UploadFile = File(...)):
         content_type=file.content_type
     )
 
-    # Extract text
-    try:
-        text = file_bytes.decode("utf-8")
-    except:
-        text = "Unsupported file type"
-
-    # Generate embedding
-    embedding = generate_embedding(text)
-
     # Store in ChromaDB
     add_document(
         doc_id=file_id,
@@ -91,7 +103,6 @@ def upload_evidence(file: UploadFile = File(...)):
     )
 
     # Store metadata in PostgreSQL
-    db = SessionLocal()
     evidence = Evidence(
         id=file_id,
         file_name=file_name,
@@ -111,14 +122,16 @@ def upload_evidence(file: UploadFile = File(...)):
 # =============================
 @app.post("/semantic-search")
 def semantic_search_endpoint(query: str, top_k: int = 3):
+    try:
+        query_embedding = generate_embedding(query)
+    except Exception as e:
+        return {"error": f"Failed to generate query embedding: {str(e)}"}
 
-    query_embedding = generate_embedding(query)
     results = similarity_search(query_embedding, top_k)
-
     return {
-        "matched_ids": results["ids"],
-        "matched_documents": results["documents"],
-        "similarity_scores": results["distances"]
+        "matched_ids": results.get("ids", [[]])[0],
+        "matched_documents": results.get("documents", [[]])[0],
+        "similarity_scores": results.get("distances", [[]])[0]
     }
 
 
@@ -150,10 +163,13 @@ def vector_dimension():
 @app.post("/ask")
 def ask_question(query: str):
 
-    query_embedding = generate_embedding(query)
-    results = similarity_search(query_embedding, top_k=3)
+    try:
+        query_embedding = generate_embedding(query)
+    except Exception as e:
+        return {"error": f"Failed to generate query embedding: {str(e)}"}
 
-    matched_docs = results["documents"][0]
+    results = similarity_search(query_embedding, top_k=3)
+    matched_docs = results.get("documents", [[]])[0]
     context = "\n\n".join(matched_docs)
 
     prompt = f"""
@@ -171,6 +187,4 @@ Answer clearly:
 """
 
     answer = ask_llm(prompt)
-
     return {"answer": answer}
-

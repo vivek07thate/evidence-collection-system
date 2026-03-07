@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, DateTime
-from postgresql_db import Base
+from sqlalchemy import Column, String, DateTime
+from app.db.database import Base
 from datetime import datetime
 
 class Evidence(Base):

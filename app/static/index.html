@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Intelligence System</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@600&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="status-dot"></div>
+            <h1>SYSTEM ACCESS</h1>
+        </div>
+
+        <div class="tool-group">
+            <label>Evidence Acquisition</label>
+            <input type="file" id="fileInput" class="input-field" style="display: none;" onchange="updateFileName()">
+            <button class="btn-premium btn-primary-gradient" onclick="document.getElementById('fileInput').click()">
+                <span id="fileLabel">Browse Files</span>
+            </button>
+            <button class="btn-premium" onclick="uploadFile()" style="margin-top: 8px;">Upload Signal</button>
+        </div>
+
+        <div class="tool-group">
+            <label>Semantic Filter</label>
+            <input type="text" id="searchQuery" class="input-field" placeholder="Enter query parameters...">
+            <button class="btn-premium" onclick="semanticSearch()">Execute Search</button>
+        </div>
+
+        <div class="tool-group">
+            <label>Memory Management</label>
+            <input type="text" id="deleteId" class="input-field" placeholder="Object ID to purge...">
+            <button class="btn-premium" onclick="deleteEmbedding()"
+                style="color: #ff4d4d; border-color: rgba(255, 77, 77, 0.2);">Delete Embedding</button>
+        </div>
+
+        <div style="margin-top: auto; font-size: 0.7rem; color: var(--text-dim); opacity: 0.5;">
+            SECURE LINK ESTABLISHED // V2.1.2
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="app-header">
+            <div class="app-title-group">
+                <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                <div style="font-family: 'Orbitron'; font-size: 0.9rem; margin-left: 12px;">INVESTIGATION ASSISTANT
+                </div>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>CORE ONLINE</span>
+            </div>
+        </header>
+
+        <div id="chatMessages" class="chat-messages">
+            <div class="message ai">
+                Welcome to the Secure Evidence Intelligence Terminal. Upload documents or ask questions to begin
+                analysis.
+            </div>
+        </div>
+
+        <footer class="chat-input-container">
+            <div class="input-wrapper">
+                <input type="text" id="llmQuery" placeholder="Ask about analyzed evidence..."
+                    onkeypress="if(event.key === 'Enter') askLLM()">
+                <button class="send-btn" onclick="askLLM()">SEND</button>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        function updateFileName() {
+            const input = document.getElementById('fileInput');
+            const label = document.getElementById('fileLabel');
+            if (input.files.length > 0) {
+                label.innerText = input.files[0].name;
+            }
+        }
+
+        function addMessage(text, role) {
+            const chatArea = document.getElementById("chatMessages");
+            const bubble = document.createElement("div");
+            bubble.className = `message ${role}`;
+            bubble.innerText = text;
+            chatArea.appendChild(bubble);
+            chatArea.scrollTo({ top: chatArea.scrollHeight, behavior: 'smooth' });
+        }
+
+        function showTyping() {
+            const chatArea = document.getElementById("chatMessages");
+            const indicator = document.createElement("div");
+            indicator.id = "typing-indicator";
+            indicator.className = "message ai typing";
+            indicator.innerText = "Interrogating database...";
+            chatArea.appendChild(indicator);
+            chatArea.scrollTo({ top: chatArea.scrollHeight, behavior: 'smooth' });
+        }
+
+        function hideTyping() {
+            const indicator = document.getElementById("typing-indicator");
+            if (indicator) indicator.remove();
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById("fileInput");
+            if (!fileInput.files.length) return alert("Select a file first!");
+
+            const file = fileInput.files[0];
+            addMessage(`Uploading ${file.name}...`, "user");
+            showTyping();
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                const response = await fetch("/upload-evidence", { method: "POST", body: formData });
+                const result = await response.json();
+                hideTyping();
+                addMessage(result.message || result.error, "ai");
+                fileInput.value = "";
+                document.getElementById('fileLabel').innerText = "Browse Files";
+            } catch (err) {
+                hideTyping();
+                addMessage("Critical error during signal transmission.", "ai");
+            }
+        }
+
+        async function askLLM() {
+            const input = document.getElementById("llmQuery");
+            const query = input.value.trim();
+            if (!query) return;
+
+            addMessage(query, "user");
+            input.value = "";
+            showTyping();
+
+            try {
+                const response = await fetch(`/ask?query=${encodeURIComponent(query)}`, { method: "POST" });
+                const result = await response.json();
+                hideTyping();
+                addMessage(result.answer || result.error, "ai");
+            } catch (err) {
+                hideTyping();
+                addMessage("Intelligence retrieval failed.", "ai");
+            }
+        }
+
+        async function semanticSearch() {
+            const query = document.getElementById("searchQuery").value.trim();
+            if (!query) return;
+
+            addMessage(`Filtering: ${query}`, "user");
+            showTyping();
+
+            try {
+                const response = await fetch(`/semantic-search?query=${encodeURIComponent(query)}`, { method: "POST" });
+                const result = await response.json();
+                hideTyping();
+
+                const ids = result.matched_ids || [];
+                const scores = result.similarity_scores || [];
+                const count = ids.length;
+
+                if (count === 0) {
+                    addMessage("No matching artifacts found in signal matrix.", "ai");
+                } else {
+                    let summary = `Found ${count} matches:\n`;
+                    ids.forEach((id, i) => {
+                        const similarity = (1 - scores[i]).toFixed(4);
+                        summary += `\n[${i + 1}] ID: ${id} (Score: ${similarity})`;
+                    });
+                    addMessage(summary, "ai");
+                }
+                document.getElementById("searchQuery").value = "";
+            } catch (err) {
+                hideTyping();
+                addMessage("Error executing semantic filter.", "ai");
+            }
+        }
+
+        async function deleteEmbedding() {
+            const id = document.getElementById("deleteId").value.trim();
+            if (!id) return;
+
+            showTyping();
+            try {
+                const response = await fetch(`/delete-embedding/${encodeURIComponent(id)}`, { method: "DELETE" });
+                const result = await response.json();
+                hideTyping();
+                addMessage(result.message, "ai");
+                document.getElementById("deleteId").value = "";
+            } catch (err) {
+                hideTyping();
+                addMessage("Object purge failed.", "ai");
+            }
+        }
+    </script>
+</body>
+
+</html>

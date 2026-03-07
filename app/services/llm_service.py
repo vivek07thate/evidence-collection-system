@@ -1,13 +1,11 @@
 import requests
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "qwen2.5:1.5b"   # <-- IMPORTANT
+from app.core.config import OLLAMA_URL, LLM_MODEL_NAME
 
 def ask_llm(prompt: str):
     response = requests.post(
         OLLAMA_URL,
         json={
-            "model": MODEL_NAME,
+            "model": LLM_MODEL_NAME,
             "prompt": prompt,
             "stream": False
         }
