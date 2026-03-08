@@ -212,7 +212,6 @@ The system retrieves the **most relevant evidence and generates contextual insig
 
 * Multi-modal embeddings (image + text + video)
 * Real-time evidence indexing
-* Advanced access control (RBAC)
 * Automated case intelligence summaries
 
 ---
