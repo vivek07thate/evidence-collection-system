@@ -164,7 +164,7 @@ pip install -r requirements.txt
 ### Run Application
 
 ```
-uvicorn main:app --reload
+python run.py
 ```
 
 Application will start at:
