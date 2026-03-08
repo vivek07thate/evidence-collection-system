@@ -36,34 +36,6 @@ Investigators can interact with the system using conversational queries.
 <img width="783" height="658" alt="diagram-export-3-9-2026-12_47_39-AM" src="https://github.com/user-attachments/assets/28fd0f1e-75b6-40ab-a4d6-acda4e906e18" />
 
 
-```
-                   ┌─────────────────────────┐
-                   │  Investigator Interface │
-                   │  (Chat / Search UI)     │
-                   └─────────────┬───────────┘
-                                 │
-                                 ▼
-                        ┌─────────────────┐
-                        │   FastAPI API   │
-                        │  Backend Server │
-                        └────────┬────────┘
-                                 │
-         ┌───────────────────────┼────────────────────────┐
-         ▼                       ▼                        ▼
- ┌───────────────┐     ┌──────────────────┐      ┌─────────────────┐
- │ Object Storage│     │ Embedding Model  │      │ Vector Database │
- │ Evidence Files│     │ SentenceTransformer │   │ Semantic Search │
- └───────────────┘     └──────────────────┘      └─────────────────┘
-                                 │
-                                 ▼
-                         ┌──────────────┐
-                         │  LLM Engine  │
-                         │  (RAG Model) │
-                         └──────────────┘
-                                 │
-                                 ▼
-                        AI Generated Insights
-```
 
 ---
  
