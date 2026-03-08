@@ -33,7 +33,8 @@ Investigators can interact with the system using conversational queries.
 ---
 
 # 🏗 System Architecture
-<img width="783" height="658" alt="diagram-export-3-9-2026-12_47_39-AM" src="https://github.com/user-attachments/assets/28fd0f1e-75b6-40ab-a4d6-acda4e906e18" />
+
+<img width="783" height="581" alt="diagram-export-3-9-2026-12_47_39-AM" src="https://github.com/user-attachments/assets/51930cc7-3991-440e-a9a4-c2234b2f2d78" />
 
 
 
