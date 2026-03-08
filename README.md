@@ -42,7 +42,8 @@ Investigators can interact with the system using conversational queries.
 # 📸 Demo Screenshots
 
 ### 1️⃣ Evidence Upload Interface
-Investigators can upload evidence files such as PDFs, text documents, images, or metadata.
+Investigators can upload evidence files such as PDFs, text documents, images,or metadata.
+
 <img width="285" height="460" alt="Screenshot 2026-03-09 021549" src="https://github.com/user-attachments/assets/7ed3e15d-1248-476c-a866-10dd341a822d" />
 
 <img width="741" height="378" alt="Screenshot 2026-03-09 021117" src="https://github.com/user-attachments/assets/a91b87ba-945d-4a11-88c2-df7afac9cc58" />
@@ -65,7 +66,6 @@ The dashboard displays uploaded evidence and allows investigators to manage and 
 Investigators can ask questions in natural language.  
 The system retrieves the most relevant evidence using vector embeddings.
 
-![Semantic Search](screenshots/search.png)
 
 ---
 
