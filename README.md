@@ -1,4 +1,4 @@
-<img width="783" height="658" alt="diagram-export-3-9-2026-12_47_39-AM" src="https://github.com/user-attachments/assets/ef354a3c-728e-4034-84ac-c763e659fef5" /><img width="1567" height="1316" alt="image" src="https://github.com/user-attachments/assets/a24d276f-0a70-45f1-bf15-80097e3c6866" /># 🧠 Evidence Collection & Intelligence System
+🧠 Evidence Collection & Intelligence System
 
 An **AI-powered Evidence Collection and Intelligence Platform** designed to store, analyze, and retrieve investigative evidence using **semantic search and Retrieval-Augmented Generation (RAG)**.
 
