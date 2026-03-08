@@ -39,6 +39,43 @@ Investigators can interact with the system using conversational queries.
 
 
 ---
+# 📸 Demo Screenshots
+
+### 1️⃣ Evidence Upload Interface
+Investigators can upload evidence files such as PDFs, text documents, images, or metadata.
+<img width="285" height="460" alt="Screenshot 2026-03-09 021549" src="https://github.com/user-attachments/assets/7ed3e15d-1248-476c-a866-10dd341a822d" />
+
+<img width="741" height="378" alt="Screenshot 2026-03-09 021117" src="https://github.com/user-attachments/assets/a91b87ba-945d-4a11-88c2-df7afac9cc58" />
+
+<img width="1569" height="550" alt="Screenshot 2026-03-09 021142" src="https://github.com/user-attachments/assets/e8233f06-9e73-4ae2-872d-031f51635c1d" />
+
+---
+
+### 2️⃣ Evidence Dashboard
+The dashboard displays uploaded evidence and allows investigators to manage and analyze files.
+<img width="1868" height="892" alt="Screenshot 2026-03-09 021230" src="https://github.com/user-attachments/assets/6a7b0844-4123-4211-85a3-f3574659b03d" />
+
+<img width="907" height="604" alt="Screenshot 2026-03-09 021214" src="https://github.com/user-attachments/assets/28588ac0-a107-44ed-84be-aa522d048359" />
+
+
+
+---
+
+### 3️⃣ Semantic Search & Chat Interface
+Investigators can ask questions in natural language.  
+The system retrieves the most relevant evidence using vector embeddings.
+
+![Semantic Search](screenshots/search.png)
+
+---
+
+### 4️⃣ AI Generated Insights
+Using the **Retrieval-Augmented Generation pipeline**, the system generates contextual answers from retrieved evidence.
+<img width="1561" height="744" alt="Screenshot 2026-03-09 021359" src="https://github.com/user-attachments/assets/86eabe05-9a32-40a8-aa3f-9f4cd17a5fc0" />
+
+
+
+---
  
 # 🧠 RAG Pipeline
 
